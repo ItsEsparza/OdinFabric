@@ -162,7 +162,7 @@ object BloodCamp : Module(
             is EntityTrackerUpdateS2CPacket -> {
                 if (!bloodAssist || currentWatcherEntity != null) return
                 currentWatcherEntity = (mc.world?.getEntityById(id) as? ZombieEntity)?.takeIf { it.getEquippedStack(EquipmentSlot.HEAD)?.texture in watcherSkulls } ?: return
-                devMessage("Watcher found at ${currentWatcherEntity?.pos}")
+                devMessage("Watcher found at ${currentWatcherEntity?.entityPos}")
             }
             is CommonPingS2CPacket -> currentTickTime += 50
         }

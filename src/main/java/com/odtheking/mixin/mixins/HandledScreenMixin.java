@@ -1,9 +1,11 @@
 package com.odtheking.mixin.mixins;
 
 import com.odtheking.odin.events.GuiEvent;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import org.spongepowered.asm.mixin.Mixin;
@@ -46,20 +48,17 @@ public class HandledScreenMixin {
     }
 
     @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
-    public void onMouseClicked(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cir) {
-        if (new GuiEvent.MouseClick((Screen) (Object) this, (int) mouseX, (int) mouseY, button).postAndCatch())
-            cir.cancel();
+    public void onMouseClicked(Click click, boolean doubled, CallbackInfoReturnable<Boolean> cir) {
+        if (new GuiEvent.MouseClick((Screen) (Object) this, click).postAndCatch()) cir.cancel();
     }
 
     @Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
-    public void onKeyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
-        if (new GuiEvent.KeyPress((Screen) (Object) this, keyCode, scanCode, modifiers).postAndCatch()) cir.cancel();
+    public void onKeyPressed(KeyInput input, CallbackInfoReturnable<Boolean> cir) {
+        if (new GuiEvent.KeyPress((Screen) (Object) this, input).postAndCatch()) cir.cancel();
     }
 
     @Inject(method = "drawMouseoverTooltip", at = @At("HEAD"), cancellable = true)
     public void onDrawMouseoverTooltip(DrawContext context, int mouseX, int mouseY, CallbackInfo ci) {
-        if (new GuiEvent.DrawTooltip((Screen) (Object) this, context, mouseX, mouseY).postAndCatch()) {
-            ci.cancel();
-        }
+        if (new GuiEvent.DrawTooltip((Screen) (Object) this, context, mouseX, mouseY).postAndCatch()) ci.cancel();
     }
 }

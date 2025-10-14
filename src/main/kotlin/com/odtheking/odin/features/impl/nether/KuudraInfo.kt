@@ -46,7 +46,7 @@ object KuudraInfo : Module(
             if (kuudraHPDisplay) {
                 event.context.drawText(
                     Text.of(getCurrentHealthDisplay(it.health)).asOrderedText(),
-                    it.pos.add(it.rotationVector.multiply(13.0).addVec(y = 10.0)), healthSize, depth = true
+                    it.entityPos.add(it.rotationVector.multiply(13.0).addVec(y = 10.0)), healthSize, depth = true
                 )
             }
         }
