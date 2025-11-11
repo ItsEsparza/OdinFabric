@@ -76,14 +76,14 @@ tasks {
 
     compileKotlin {
         compilerOptions {
-            jvmTarget = JvmTarget.JVM_21
+            jvmTarget = JvmTarget.JVM_17
             freeCompilerArgs.add("-Xlambdas=class") //Commodore
         }
     }
 
     compileJava {
-        sourceCompatibility = "21"
-        targetCompatibility = "21"
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
         options.encoding = "UTF-8"
         options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:unchecked"))
     }

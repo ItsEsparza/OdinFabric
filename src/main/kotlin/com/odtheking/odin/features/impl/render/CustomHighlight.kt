@@ -34,14 +34,9 @@ object CustomHighlight : Module(
             entities.forEach { entity ->
                 val boundingBox = entity.renderBoundingBox
                 val color = highlightMap[entity.displayName?.string] ?: color
-                val canSee = mc.player?.hasLineOfSight(
-                    entity,
-                    ClipContext.Block.VISUAL,
-                    ClipContext.Fluid.NONE,
-                    entity.eyeY
-                ) ?: false
 
-                context.drawStyledBox(boundingBox, color.multiplyAlpha(0.5f), renderStyle, !canSee)
+                // Depth check disabled - always render through walls (ESP mode)
+                context.drawStyledBox(boundingBox, color.multiplyAlpha(0.5f), renderStyle, false)
             }
         }
     }
